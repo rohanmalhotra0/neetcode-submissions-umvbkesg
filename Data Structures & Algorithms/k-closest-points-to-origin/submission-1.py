@@ -1,14 +1,15 @@
 class Solution:
-    def lastStoneWeight(self, stones: List[int]) -> int:
-      
-        stones = [-s for s in stones]
-        heapq.heapify(stones)
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        if k > len(points):
+            return []
 
-        while len(stones) > 1:
-            first = heapq.heappop(stones)
-            second = heapq.heappop(stones)
-            if second > first:
-                heapq.heappush(stones, first - second)
-
-        stones.append(0)
-        return abs(stones[0])
+        distance = {}
+        dist = []
+        for i in range(len(points)):
+            dist = -sqrt((points[i][0])^2 + (points[i][1]^2))
+            distance[dist] = [points[i][0], points[i][1]]  
+        heapq.heapify(dist)
+        for i in range(k):
+            x , y = heapq.heappop(dist)
+            res.append([x,y])
+        
