@@ -1,0 +1,50 @@
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        rows , cols = len(grid), len(grid[0])
+        visited = set()
+        q = deque()
+        maxArea = 0
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] not in visited and grid[r][c] == 1:
+                    q.append((r,c))
+        
+        while q:
+            cur = 1
+            x, y = q.pop()
+            visited.add((r,c))
+            for dx , dy in directions:
+                nx , ny = x + dx, y + dy
+                if 0 <= r < rows and 0 <= c < cols and grid[nx][ny] not in visited:
+                    if grid[nx][ny] == 1:
+                        visited.add((r,c))
+                        q.append((r,c))
+                        cur += 1
+            maxArea = max(maxArea, cur)
+        return maxArea
+
+"""
+
+        def dfs(r,c):
+            if (min(r,c) < 0 or r >= rows or c >= cols or (r,c) in visited or grid[r][c] != 1):
+                return 0 
+                
+            visited.add((r,c))
+            
+            curr = 1
+            curr += dfs(r + 1, c)
+            curr += dfs(r - 1, c)
+            curr += dfs(r, c + 1)
+            curr += dfs(r, c - 1)
+            return curr
+
+        for r in range(rows):
+            for c in range(cols):
+                if (r,c) not in visited and grid[r][c] == 1:
+                   
+                    curr = dfs(r,c)
+                    maxArea = max(curr, maxArea)
+        return maxArea
+
+"""
