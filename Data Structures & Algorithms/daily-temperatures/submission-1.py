@@ -1,14 +1,18 @@
 class Solution:
-    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
-        nums = temperatures
-        stack = []
-        res = [0] * len(temperatures)
+    def asteroidCollision(self, asteroids: List[int]) -> List[int]:
 
-        for i, val in enumerate(nums):
-            # Pop elements that current value resolves
-            while stack and nums[stack[-1]] < val:
-                j = stack.pop()
-                res[j] = i-j
-               
-            stack.append(i)
-        return res
+
+        stack = []
+        for num in asteroids:
+            while stack and num < 0 and stack[-1] > 0:
+                diff = num + stack[-1]
+                if diff < 0:
+                    stack.pop()
+                elif diff > 0:
+                    num = 0
+                else:
+                    num = 0
+                    stack.pop()
+            if num:
+                stack.append(num)
+        return stack
